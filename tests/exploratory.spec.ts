@@ -15,7 +15,7 @@ import { test,expect} from "@playwright/test";
  }
  
  // Test passant insertions text and click button
- test("exploratory", async ({ page }) => {
+ test("insertions", async ({ page }) => {
      await navigateToApp(page);
      await fillTextBox(page, 'add');
      await clickCheckButton(page);
@@ -23,7 +23,7 @@ import { test,expect} from "@playwright/test";
  });
  
  // Test passant insertions be and click button
- test("Addbe", async ({ page }) => {
+ test("Add be", async ({ page }) => {
      await navigateToApp(page);
      await fillTextBox(page, 'be');
      await clickCheckButton(page);
@@ -33,6 +33,7 @@ import { test,expect} from "@playwright/test";
  });
  
  // TESTER VERBE be au present simple, futur simple et passé simple
+
  test("be", async ({ page }) => {
      await navigateToApp(page);
      await fillTextBox(page, 'I am , I was ,I will be');
@@ -40,8 +41,10 @@ import { test,expect} from "@playwright/test";
      await expect(page.getByText('I am , I was ,I will be')).toBeVisible();
  });
  
+
+
  // TESTER le nombre de mots
- test("beCount", async ({ page }) => {
+ test("be Count", async ({ page }) => {
      await navigateToApp(page);
      await fillTextBox(page, 'I am, I was, I will be');
      await clickCheckButton(page);
@@ -49,10 +52,27 @@ import { test,expect} from "@playwright/test";
      await expect(page.getByText('Discouraged Words:').getByText('3')).toBeVisible();
  });
  
+
  // click link e-prime
- test('testLink', async ({ page }) => {
+ test('test Link', async ({ page }) => {
      await navigateToApp(page);
      await page.getByRole('link', { name: 'e-prime' }).click();
+
+    // On attend qu'une popup s'ouvre et on stocke cette attente dans une promesse.
      const page1Promise = page.waitForEvent('popup');
+
+     // On attend que la popup s'ouvre réellement, puis on la récupère pour pouvoir l'utiliser.
      const page1 = await page1Promise;
  });
+
+
+
+ // Cas non passant
+ test("no Passant", async ({ page }) => {
+        await navigateToApp(page);
+        await fillTextBox(page, '%');
+        await clickCheckButton(page);
+
+         await expect(page.getByText('%')).toBeVisible();
+      
+});
